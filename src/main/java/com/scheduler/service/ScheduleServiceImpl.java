@@ -42,4 +42,29 @@ public class ScheduleServiceImpl implements ScheduleService{
         }
         return new ScheduleResponseDto(schedule);
     }
+
+    @Override
+    public ScheduleResponseDto updateSchedule(Long id, String title, String contents) {
+
+        Schedule schedule = scheduleRepository.findScheduleById(id);
+        if (schedule == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id);
+        }
+
+        if (title == null || contents == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The title and content are required values.");
+        }
+        schedule.updateTitle(title);
+        return new ScheduleResponseDto(schedule);
+    }
+
+    @Override
+    public void deleteSchedule(Long id) {
+        Schedule schedule = scheduleRepository.findScheduleById(id);
+        if (schedule == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id);
+        }
+
+        scheduleRepository.deleteSchedule(id);
+    }
 }
