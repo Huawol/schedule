@@ -54,7 +54,7 @@ public class ScheduleServiceImpl implements ScheduleService{
         if (title == null || contents == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The title and content are required values.");
         }
-        schedule.updateTitle(title);
+        schedule.update(title, contents);
         return new ScheduleResponseDto(schedule);
     }
 
