@@ -5,9 +5,7 @@ import com.scheduler.dto.ScheduleResponseDto;
 import com.scheduler.entity.Schedule;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Repository
 public class ScheduleRepositoryImpl implements ScheduleRepository{
@@ -21,5 +19,21 @@ public class ScheduleRepositoryImpl implements ScheduleRepository{
         schedule.setId(scheduleId);
         scheduleList.put(scheduleId, schedule);
         return schedule;
+    }
+
+    @Override
+    public List<ScheduleResponseDto> findAllSchedule() {
+        //init List
+        List<ScheduleResponseDto> allSchedule = new ArrayList<>();
+        for (Schedule schedule : scheduleList.values()) {
+            ScheduleResponseDto scheduleResponseDto = new ScheduleResponseDto(schedule);
+            allSchedule.add(scheduleResponseDto);
+        }
+        return allSchedule;
+    }
+
+    @Override
+    public Schedule findScheduleById(Long id) {
+        return scheduleList.get(id);
     }
 }
