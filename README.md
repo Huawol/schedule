@@ -58,7 +58,7 @@ Lv 6 : null 체크 및 특정 패턴에 대한 검증 수행
     
 }
 ```
-- Response (201 Created)
+- Response (200 OK)
 
 ```json
 {
@@ -83,7 +83,7 @@ Lv 6 : null 체크 및 특정 패턴에 대한 검증 수행
     
 }
 ```
-- Response (201 Created)
+- Response (200 OK)
 
 ```json
 {
@@ -111,7 +111,7 @@ Lv 6 : null 체크 및 특정 패턴에 대한 검증 수행
     "password" : "1234"
 }
 ```
-- Response (201 Created)
+- Response (200 OK)
 
 ```json
 {
@@ -136,7 +136,7 @@ Lv 6 : null 체크 및 특정 패턴에 대한 검증 수행
     "password" : "1234"
 }
 ```
-- Response (201 Created)
+- Response (200 OK)
 
 ```json
 {
