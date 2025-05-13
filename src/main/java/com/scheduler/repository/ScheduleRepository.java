@@ -10,9 +10,9 @@ public interface ScheduleRepository {
     ScheduleResponseDto saveSchedule(Schedule schedule);
     List<ScheduleResponseDto> findAllSchedule();
 
-    ScheduleResponseDto findScheduleById(Long id);
+    //ScheduleResponseDto findScheduleById(Long id);
     ScheduleResponseDto findScheduleByIdOrElseThrow(Long id);
     Schedule findScheduleByIdOrElseThrowV2(Long id);
     int updateSchedule(Long id, ScheduleRequestDto scheduleRequestDto);
-    int deleteSchedule(Long id);
+    int deleteSchedule(Long id, ScheduleRequestDto dto);
 }

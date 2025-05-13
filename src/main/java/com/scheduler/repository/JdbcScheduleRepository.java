@@ -52,11 +52,11 @@ public class JdbcScheduleRepository implements ScheduleRepository {
     }
 
 
-    @Override
-    public ScheduleResponseDto findScheduleById(Long id) {
-        List<ScheduleResponseDto> result = jdbcTemplate.query("select * from schedule where id = ?", scheduleRowMapper(), id);
-        return result.stream().findAny().orElseThrow();
-    }
+//    @Override
+//    public ScheduleResponseDto findScheduleById(Long id) {
+//        List<ScheduleResponseDto> result = jdbcTemplate.query("select * from schedule where id = ?", scheduleRowMapper(), id);
+//        return result.stream().findAny().orElseThrow();
+//    }
 
     @Override
     public ScheduleResponseDto findScheduleByIdOrElseThrow(Long id) {
@@ -78,8 +78,9 @@ public class JdbcScheduleRepository implements ScheduleRepository {
     }
 
     @Override
-    public int deleteSchedule(Long id) {
-        return 0;
+    public int deleteSchedule(Long id, ScheduleRequestDto dto) {
+        int updatedRow = jdbcTemplate.update("delete from schedule where id = ? ", id);
+        return updatedRow;
     }
 
 
