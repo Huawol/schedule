@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -18,8 +19,6 @@ public class ScheduleServiceImpl implements ScheduleService{
     public ScheduleServiceImpl(ScheduleRepository scheduleRepository) {
         this.scheduleRepository = scheduleRepository;
     }
-
-
     @Override // 일정 추가 서비스
     public ScheduleResponseDto saveSchedule(ScheduleRequestDto requestDto) {
         Schedule schedule = new Schedule(requestDto.getTitle(), requestDto.getContents(), requestDto.getAuthor(), requestDto.getPassword());
@@ -28,8 +27,8 @@ public class ScheduleServiceImpl implements ScheduleService{
     }
 
     @Override // 스케줄 전체 조회
-    public List<ScheduleResponseDto> findAllSchedule() {
-        List<ScheduleResponseDto> allSchedule = scheduleRepository.findAllSchedule();
+    public List<ScheduleResponseDto> findAllSchedule(String name, LocalDate date) {
+        List<ScheduleResponseDto> allSchedule = scheduleRepository.findAllSchedule(name, date);
         return allSchedule;
     }
 

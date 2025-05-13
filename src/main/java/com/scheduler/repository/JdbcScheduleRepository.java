@@ -12,8 +12,11 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.sql.DataSource;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,8 +50,18 @@ public class JdbcScheduleRepository implements ScheduleRepository {
     }
 
     @Override
-    public List<ScheduleResponseDto> findAllSchedule() {
-        return jdbcTemplate.query("select * from schedule", scheduleRowMapper());
+    public List<ScheduleResponseDto> findAllSchedule(String name, LocalDate date) {
+        StringBuilder sql = new StringBuilder("select * from schedule where 1=1");
+        List<Object> params = new ArrayList<>();
+        if (name != null) {
+            sql.append(" and author = ?");
+            params.add(name);
+        }
+        if (date != null) {
+            sql.append(" and date(created_at) = ?");
+            params.add(Date.valueOf(date));
+        }
+        return jdbcTemplate.query(sql.toString(), scheduleRowMapper() ,params.toArray());
     }
 
     @Override
