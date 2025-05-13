@@ -51,19 +51,13 @@ public class JdbcScheduleRepository implements ScheduleRepository {
         return jdbcTemplate.query("select * from schedule", scheduleRowMapper());
     }
 
-
-//    @Override
-//    public ScheduleResponseDto findScheduleById(Long id) {
-//        List<ScheduleResponseDto> result = jdbcTemplate.query("select * from schedule where id = ?", scheduleRowMapper(), id);
-//        return result.stream().findAny().orElseThrow();
-//    }
-
     @Override
     public ScheduleResponseDto findScheduleByIdOrElseThrow(Long id) {
         List<ScheduleResponseDto> result = jdbcTemplate.query("select * from schedule where id = ?", scheduleRowMapper(), id);
         return result.stream().findAny().orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exitsts id = " + id));
 
     }
+
     @Override
     public Schedule findScheduleByIdOrElseThrowV2(Long id) {
         List<Schedule> result = jdbcTemplate.query("select * from schedule where id = ?", scheduleRowMapperV2(), id);
@@ -117,5 +111,4 @@ public class JdbcScheduleRepository implements ScheduleRepository {
             }
         };
     }
-
 }

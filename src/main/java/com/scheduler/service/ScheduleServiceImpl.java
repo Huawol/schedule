@@ -3,10 +3,8 @@ package com.scheduler.service;
 import com.scheduler.dto.ScheduleRequestDto;
 import com.scheduler.dto.ScheduleResponseDto;
 import com.scheduler.entity.Schedule;
-import com.scheduler.repository.JdbcScheduleRepository;
 import com.scheduler.repository.ScheduleRepository;
 import org.springframework.http.HttpStatus;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -16,11 +14,9 @@ import java.util.List;
 public class ScheduleServiceImpl implements ScheduleService{
 
     private final ScheduleRepository scheduleRepository;
-    private final JdbcTemplate jdbcTemplate;
 
-    public ScheduleServiceImpl(ScheduleRepository scheduleRepository, JdbcTemplate jdbcTemplate) {
+    public ScheduleServiceImpl(ScheduleRepository scheduleRepository) {
         this.scheduleRepository = scheduleRepository;
-        this.jdbcTemplate = jdbcTemplate;
     }
 
 
@@ -40,7 +36,6 @@ public class ScheduleServiceImpl implements ScheduleService{
     @Override
     public ScheduleResponseDto findScheduleById(Long id) {
         return scheduleRepository.findScheduleByIdOrElseThrow(id);
-
 //        ScheduleResponseDto scheduleResponseDto = scheduleRepository.findScheduleByIdOrElseThrow(id);
 //        return scheduleResponseDto; 위에거랑 같은거
     }

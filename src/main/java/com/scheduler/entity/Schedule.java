@@ -30,12 +30,4 @@ public class Schedule {
         this.password = password;
         this.createdAt = LocalDateTime.now();
     }
-
-    public void update(String title, String contents) {
-        this.title = title;
-        this.contents = contents;
-        this.updatedAt = LocalDateTime.now();
-    }
-
-
 }
