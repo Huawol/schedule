@@ -7,8 +7,12 @@ import com.scheduler.entity.Schedule;
 import java.util.List;
 
 public interface ScheduleRepository {
-    Schedule saveSchedule(Schedule schedule);
+    ScheduleResponseDto saveSchedule(Schedule schedule);
     List<ScheduleResponseDto> findAllSchedule();
-    Schedule findScheduleById(Long id);
-    void deleteSchedule(Long id);
+
+    ScheduleResponseDto findScheduleById(Long id);
+    ScheduleResponseDto findScheduleByIdOrElseThrow(Long id);
+    Schedule findScheduleByIdOrElseThrowV2(Long id);
+    int updateSchedule(Long id, ScheduleRequestDto scheduleRequestDto);
+    int deleteSchedule(Long id);
 }

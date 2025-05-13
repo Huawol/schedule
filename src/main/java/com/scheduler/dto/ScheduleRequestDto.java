@@ -1,9 +1,7 @@
 package com.scheduler.dto;
 
 import lombok.Getter;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
+import lombok.Setter;
 
 @Getter
 public class ScheduleRequestDto {
@@ -11,4 +9,6 @@ public class ScheduleRequestDto {
     private String title;
     private String author;
     private String contents;
+    @Setter
+    private String password;
 }

@@ -23,9 +23,9 @@ public class ScheduleServiceImpl implements ScheduleService{
 
     @Override // 일정 추가 서비스
     public ScheduleResponseDto saveSchedule(ScheduleRequestDto requestDto) {
-        Schedule schedule = new Schedule(requestDto.getTitle(), requestDto.getContents(), requestDto.getAuthor());
-        Schedule saveSchedule = scheduleRepository.saveSchedule(schedule);
-        return new ScheduleResponseDto(saveSchedule);
+        Schedule schedule = new Schedule(requestDto.getTitle(), requestDto.getContents(), requestDto.getAuthor(), requestDto.getPassword());
+        ScheduleResponseDto saveSchedule = scheduleRepository.saveSchedule(schedule);
+        return saveSchedule;
     }
 
     @Override // 스케줄 전체 조회
@@ -36,35 +36,41 @@ public class ScheduleServiceImpl implements ScheduleService{
 
     @Override
     public ScheduleResponseDto findScheduleById(Long id) {
-        Schedule schedule = scheduleRepository.findScheduleById(id);
-        if (schedule == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Does not exist id = " + id);
-        }
-        return new ScheduleResponseDto(schedule);
+        return scheduleRepository.findScheduleByIdOrElseThrow(id);
+
+//        ScheduleResponseDto scheduleResponseDto = scheduleRepository.findScheduleByIdOrElseThrow(id);
+//        return scheduleResponseDto; 위에거랑 같은거
     }
 
     @Override
-    public ScheduleResponseDto updateSchedule(Long id, String title, String contents) {
+    public ScheduleResponseDto updateSchedule(Long id, ScheduleRequestDto requestDto) {
 
-        Schedule schedule = scheduleRepository.findScheduleById(id);
+        Schedule schedule = scheduleRepository.findScheduleByIdOrElseThrowV2(id);
         if (schedule == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id);
         }
-
-        if (title == null || contents == null) {
+        if (requestDto.getPassword() == null) { // 비번이 입력값이 있는지
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The title and content are required values.");
         }
-        schedule.update(title, contents);
-        return new ScheduleResponseDto(schedule);
+        if (!schedule.getPassword().equals(requestDto.getPassword())) { // 비번 확인
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "틀렸어!");
+        }
+
+        // 제목 내용 작성자 있는지 없는지
+        if (requestDto.getTitle() == null || requestDto.getContents() == null || requestDto.getAuthor() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The title and content are required values.");
+        }
+        scheduleRepository.updateSchedule(id, requestDto); // 수정
+        return scheduleRepository.findScheduleByIdOrElseThrow(id); // 조회
     }
 
     @Override
     public void deleteSchedule(Long id) {
-        Schedule schedule = scheduleRepository.findScheduleById(id);
-        if (schedule == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id);
-        }
-
-        scheduleRepository.deleteSchedule(id);
+//        Schedule schedule = scheduleRepository.findScheduleById(id);
+//        if (schedule == null) {
+//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id);
+//        }
+//
+//        scheduleRepository.deleteSchedule(id);
     }
 }

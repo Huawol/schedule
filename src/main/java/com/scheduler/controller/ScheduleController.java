@@ -39,14 +39,15 @@ public class ScheduleController {
     @PutMapping("/{id}") // 수정
     public ResponseEntity<ScheduleResponseDto> updateSchedule(
             @PathVariable Long id,
-            @RequestBody ScheduleRequestDto responseDto
+            @RequestBody ScheduleRequestDto requestDto
     ) {
-        return new ResponseEntity<>(scheduleService.updateSchedule(id,
-                responseDto.getTitle(),responseDto.getContents()), HttpStatus.OK);
+        return new ResponseEntity<>(scheduleService.updateSchedule(id, requestDto), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}") // 삭제
-    public ResponseEntity<Void> deleteSchedule(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteSchedule(
+            @PathVariable Long id,
+            @RequestBody ScheduleRequestDto requestDto) {
         scheduleService.deleteSchedule(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
